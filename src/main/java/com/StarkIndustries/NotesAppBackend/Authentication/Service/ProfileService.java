@@ -20,13 +20,16 @@ public class ProfileService {
     @Autowired
     public AuthenticationManager authenticationManager;
 
-    public boolean login(Profile profile){
+    @Autowired
+    public JwtService jwtService;
+
+    public String login(Profile profile){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(profile.getUsername(),profile.getPassword())
         );
         if(authentication.isAuthenticated())
-            return true;
-        return false;
+            return jwtService.getJwtToken(profile.getUsername());
+        return "false";
     }
 
     public Profile signUp(Profile profile){
