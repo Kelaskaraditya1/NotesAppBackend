@@ -47,4 +47,14 @@ public class ProfileService {
     public List<Profile> getUsers(){
         return profileRepository.findAll();
     }
+
+    public Profile addProfilePicUrl(String username,String profilePicUrl){
+        Profile profile = profileRepository.findByUsername(username);
+        if(profile!=null){
+            profile.setProfilePicUrl(profilePicUrl);
+            profileRepository.save(profile);
+            return profile;
+        }
+        return null;
+    }
 }

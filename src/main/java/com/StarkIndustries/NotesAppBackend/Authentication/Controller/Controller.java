@@ -5,6 +5,7 @@ import com.StarkIndustries.NotesAppBackend.Authentication.Repository.ProfileRepo
 import com.StarkIndustries.NotesAppBackend.Authentication.Service.JwtService;
 import com.StarkIndustries.NotesAppBackend.Authentication.Service.MyUserDetailsService;
 import com.StarkIndustries.NotesAppBackend.Authentication.Service.ProfileService;
+import com.StarkIndustries.NotesAppBackend.Cloudinary.Service.CloudinaryService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -15,8 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -35,6 +38,9 @@ public class Controller {
 
     @Autowired
     public ProfileRepository profileRepository;
+
+    @Autowired
+    public CloudinaryService cloudinaryService;
 
     @GetMapping("/greetings")
     public ResponseEntity<String> greetings(){
@@ -74,5 +80,17 @@ public class Controller {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
+    @PutMapping("/upload-profile-pic/{username}")
+    public ResponseEntity<Profile> uploadProfilePic(@RequestParam("image") MultipartFile file,@PathVariable("username") String username){
+        Map data = cloudinaryService.uploadProfilePic(file);
+        String profilePicUrl = data.get("secure_url").toString();
+        Profile profile = profileService.addProfilePicUrl(username,profilePicUrl);
+        if(profile!=null)
+            return ResponseEntity.status(HttpStatus.OK).body(profile);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+
 
 }
