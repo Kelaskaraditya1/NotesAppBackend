@@ -45,6 +45,7 @@ public class NotesController {
         if(notes1!=null)
             return ResponseEntity.status(HttpStatus.OK).body(notes1);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
     }
 
     @DeleteMapping("/delete-note/{noteId}")
