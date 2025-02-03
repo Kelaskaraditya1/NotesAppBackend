@@ -55,7 +55,7 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Profile profile){
         if(profileService.login(profile)!="false")
             return ResponseEntity.status(HttpStatus.OK).body(profileService.login(profile));
