@@ -14,18 +14,12 @@ import java.util.Map;
 @Configuration
 public class CloudinaryConfigurations {
 
-    @Value("${api.key}")
-    private String apiKey;
-
-    @Value("${api.secret}")
-    private String apiSecret;
-
     @Bean
     public Cloudinary cloudinary(){
         Map<String,Object> configurations = new HashMap<>();
-        configurations.put(Keys.CLOUD_NAME,"dhdrzsxor");
-        configurations.put(Keys.API_KEY,apiKey);
-        configurations.put(Keys.API_SECRET,apiSecret);
+        configurations.put(Keys.CLOUD_NAME,System.getenv("CLOUD_NAME"));
+        configurations.put(Keys.API_KEY,System.getenv("API_KEY"));
+        configurations.put(Keys.API_SECRET,System.getenv("API_SECRETE"));
         configurations.put(Keys.SECURE,true);
         return new Cloudinary(configurations);
     }
