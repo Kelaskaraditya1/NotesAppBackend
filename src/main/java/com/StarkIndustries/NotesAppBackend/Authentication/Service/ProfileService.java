@@ -57,4 +57,12 @@ public class ProfileService {
         }
         return null;
     }
+
+    public boolean deleteUser(int userId){
+        if(profileRepository.existsById(userId)){
+            profileRepository.deleteById(userId);
+            return true;
+        }
+        return false;
+    }
 }

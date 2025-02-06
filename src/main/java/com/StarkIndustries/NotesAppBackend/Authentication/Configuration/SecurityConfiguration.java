@@ -34,7 +34,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain getSecurityFilterChain(HttpSecurity security) throws Exception {
         return security.csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(request->
-                        request.requestMatchers("/auth/login","/auth/signup")
+                        request.requestMatchers("/auth/login","/auth/signup","/auth/upload-profile-pic/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())

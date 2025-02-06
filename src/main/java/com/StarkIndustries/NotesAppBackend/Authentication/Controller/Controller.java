@@ -91,6 +91,11 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-
+    @DeleteMapping("/delete-user/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") int userId){
+        if(profileService.deleteUser(userId))
+            return ResponseEntity.status(HttpStatus.OK).body("User deleted Successfully!!");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 
 }
