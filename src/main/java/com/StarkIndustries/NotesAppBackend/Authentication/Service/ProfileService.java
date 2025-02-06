@@ -65,4 +65,8 @@ public class ProfileService {
         }
         return false;
     }
+
+    public Profile getUserByUsername(String username){
+        return profileRepository.findByUsername(username);
+    }
 }

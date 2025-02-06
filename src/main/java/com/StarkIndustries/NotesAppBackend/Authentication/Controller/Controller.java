@@ -98,4 +98,11 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    @GetMapping("/get-user-by-username/{username}")
+    public ResponseEntity<Profile> getProfileUsingUsername(@PathVariable("username") String username){
+        Profile profile = profileService.getUserByUsername(username);
+        if(profile!=null)
+            return ResponseEntity.status(HttpStatus.OK).body(profile);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
